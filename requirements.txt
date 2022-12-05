@@ -1,0 +1,5 @@
+Flask==2.2.2
+keras==2.10.0
+tensorflow==2.10.0
+flask_cors==3.0.10
+Pillow==9.1.0
