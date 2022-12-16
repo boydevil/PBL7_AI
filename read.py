@@ -1,19 +1,22 @@
 from keras.models import load_model
 import keras.applications.xception as xception
-from PIL import Image, ImageOps #Install pillow instead of PIL
+from PIL import Image, ImageOps
 import numpy as np
 import warnings
 import requests
 from io import BytesIO
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
+
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 # Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
 
 # Load the model
-model = load_model(r"C:\Users\ADMIN\Desktop\Hoc\DUT7\PBL7\AI\Models\model.h5", compile=False)
+model = load_model("model.h5", custom_objects={"xception": xception}, compile=False)
 # Load the labels
-class_names = open(r'C:\Users\ADMIN\Desktop\Hoc\DUT7\PBL7\AI\Models\labels.txt', 'r').readlines()
+class_names = open('labels.txt',).readlines()
 IMAGE_WIDTH = 71
 IMAGE_HEIGHT = 71
 # Create the array of the right shape to feed into the keras model
