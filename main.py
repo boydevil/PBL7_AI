@@ -1,8 +1,6 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
 from flask_cors import CORS, cross_origin
-from read import predict
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' 
+import urllib.request, json 
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -17,10 +15,10 @@ def index():
 @cross_origin()
 def process():
    url = request.args.get('url')
-   class_name , confidence_score = predict(url)
-   class_name = class_name[2:-1]
-   confidence_score = confidence_score[:5]
-   return jsonify(class_name = class_name, confidence_score = confidence_score)
+   url = "".join(['http://127.0.0.1:8080/api/v1/predict/?url=',url])
+   with urllib.request.urlopen(url) as url:
+    data = json.load(url)
+    return(data)
 
 if __name__ == '__main__':
-   app.run(host='127.0.0.1', port = 8080, debug = True)
+   app.run(host='127.0.0.1', port = 5000, debug = True)
